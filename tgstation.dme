@@ -10024,6 +10024,7 @@
 #include "modular_zzplurt\code\modules\logging\log_category.dm"
 #include "modular_zzplurt\code\modules\mecha\mecha_plates.dm"
 #include "modular_zzplurt\code\modules\mecha\mecha_plates_research.dm"
+#include "modular_zzplurt\code\modules\mecha\mecha_types.dm"
 #include "modular_zzplurt\code\modules\mining\mine_items.dm"
 #include "modular_zzplurt\code\modules\mining\lavaland\necropolis_chest.dm"
 #include "modular_zzplurt\code\modules\mob\mob.dm"

@@ -1,4 +1,4 @@
-	//splurt start
+/obj/item/mecha_parts/mecha_equipment/armor
 	///how much integrity this armor have
 	var/armor_integrity = 100
 	var/added_armor = 0

@@ -37,6 +37,7 @@
 		playsound(src, gear.destroy_sound, 50)
 
 /obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+//splurt edit start -- Mecha additions, better armor
 	// Always start with the mech's base armor reduction
 	var/final_damage_amount = run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
 
@@ -88,42 +89,8 @@
 
 	return final_damage_amount
 
+//splurt edit end -- Mecha additions, better armor
 
-/*
-
-/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
-	var/armor_damage_amount
-	if(equip_by_category[MECHA_ARMOR])
-		for(var/obj/item/mecha_parts/mecha_equipment/armor/mech_armor)
-			if(!mech_armor.armor_operational)
-				continue
-			armor_damage_amount = mech_armor.run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
-			/*ARMOR EXTRA INTEGRITY
-			This allows the armor plates to soak up the damage from incoming hits. Uses inherent hull armor values.
-			*/
-			if(mech_armor.armor_integrity > armor_damage_amount)
-				mech_armor.armor_integrity -= armor_damage_amount
-				armor_damage_amount = armor_damage_amount - max(mech_armor.damage_reduction, 0)
-				break
-
-			else
-				armor_damage_amount -= mech_armor.armor_integrity
-				mech_armor.armor_operational = FALSE
-				qdel(mech_armor)
-
-	var/damage_taken = armor_damage_amount // | ..()
-	if(damage_taken <= 0 || atom_integrity < 0)
-		return damage_taken
-
-	diag_hud_set_mechhealth()
-	spark_system?.start()
-	try_deal_internal_damage(damage_taken)
-	if(damage_taken >= 5 || prob(33))
-		to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
-	log_message("Took [damage_taken] points of damage. Damage type: [damage_type]", LOG_MECHA)
-
-	return damage_taken
-*/
 /obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration)
 	. = ..()
 	if(attack_dir)
