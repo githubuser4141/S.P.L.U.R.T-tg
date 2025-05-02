@@ -73,9 +73,11 @@
 	SEND_SIGNAL(user, COMSIG_MOB_DROVE_MECH, src)
 
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
+	var/obj/item/mecha_parts/mecha_equipment/armor/armor
+	var/slowdown = armor ? armor.mechslowdown : 0
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
-	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
+	COOLDOWN_START(src, cooldown_vehicle_move, movedelay+slowdown)
 	if(completely_disabled)
 		return FALSE
 	if(!direction)

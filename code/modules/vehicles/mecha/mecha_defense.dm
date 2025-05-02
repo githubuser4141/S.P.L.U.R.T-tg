@@ -37,18 +37,73 @@
 		playsound(src, gear.destroy_sound, 50)
 
 /obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
+	// Always start with the mech's base armor reduction
+	var/final_damage_amount = run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+
+	// Process through armor equipment if it exists
+	if(equip_by_category[MECHA_ARMOR]?.len)
+		for(var/obj/item/mecha_parts/mecha_equipment/armor/mech_armor in equip_by_category[MECHA_ARMOR])
+			if(!mech_armor.armor_operational)
+				continue
+
+			// The armor takes the damage after the mech's base armor reduction
+			if(mech_armor.armor_integrity > 0)
+				mech_armor.armor_integrity -= final_damage_amount
+
+				// Check if armor is destroyed
+				if(mech_armor.armor_integrity <= 0)
+					mech_armor.armor_operational = FALSE
+					qdel(mech_armor)
+					// Armor is destroyed, but still provided its damage reduction
+					final_damage_amount = max(0, final_damage_amount - mech_armor.damage_reduction)
+				else
+					// Apply flat damage reduction to remaining damage (minimum 0)
+					final_damage_amount = max(0, final_damage_amount - mech_armor.damage_reduction)
+
+				break  // Only the first operational armor processes damage
+
+
+	// If final damage is 0 or mech already destroyed, return early
+	if(final_damage_amount <= 0)
+		return final_damage_amount
+	if(atom_integrity <= 0)
+		return ..()
+
+	// Apply remaining damage to the mech itself
+	atom_integrity -= final_damage_amount
+
+	// Update HUD and visual effects
+	diag_hud_set_mechhealth()
+	spark_system?.start()
+
+	// Check for internal damage
+	try_deal_internal_damage(final_damage_amount)
+
+	// Notify occupants
+	if(final_damage_amount >= 5 || prob(33))
+		to_chat(occupants, "[icon2html(src, occupants)][span_userdanger("Taking damage!")]")
+
+	// Log message
+	log_message("Took [final_damage_amount] points of damage. Damage type: [damage_type]", LOG_MECHA)
+
+	return final_damage_amount
+
+
+/*
+
+/obj/vehicle/sealed/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	var/armor_damage_amount
 	if(equip_by_category[MECHA_ARMOR])
 		for(var/obj/item/mecha_parts/mecha_equipment/armor/mech_armor)
 			if(!mech_armor.armor_operational)
 				continue
-			armor_damage_amount = run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
+			armor_damage_amount = mech_armor.run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
 			/*ARMOR EXTRA INTEGRITY
 			This allows the armor plates to soak up the damage from incoming hits. Uses inherent hull armor values.
 			*/
 			if(mech_armor.armor_integrity > armor_damage_amount)
 				mech_armor.armor_integrity -= armor_damage_amount
-				armor_damage_amount = 0
+				armor_damage_amount = armor_damage_amount - max(mech_armor.damage_reduction, 0)
 				break
 
 			else
@@ -56,7 +111,7 @@
 				mech_armor.armor_operational = FALSE
 				qdel(mech_armor)
 
-	var/damage_taken = armor_damage_amount | ..()
+	var/damage_taken = armor_damage_amount // | ..()
 	if(damage_taken <= 0 || atom_integrity < 0)
 		return damage_taken
 
@@ -68,7 +123,7 @@
 	log_message("Took [damage_taken] points of damage. Damage type: [damage_type]", LOG_MECHA)
 
 	return damage_taken
-
+*/
 /obj/vehicle/sealed/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration)
 	. = ..()
 	if(attack_dir)
