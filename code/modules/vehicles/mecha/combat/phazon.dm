@@ -75,3 +75,15 @@
 	button_icon_state = "mech_phasing_[chassis.phasing ? "on" : "off"]"
 	chassis.balloon_alert(owner, "[chassis.phasing ? "enabled" : "disabled"] phasing")
 	build_all_button_icons()
+
+/obj/vehicle/sealed/mecha/phazon/phazon2
+	armor_type = /datum/armor/mecha_phazon_2
+
+/datum/armor/mecha_phazon_2
+	melee = 15
+	bullet = 15
+	laser = 15
+	energy = 30
+	bomb = 30
+	fire = 100
+	acid = 100

@@ -1,9 +1,10 @@
 /obj/item/mecha_parts/mecha_equipment/armor
 	///how much integrity this armor have
-	var/armor_integrity = 100
+	var/armor_integrity
+	var/max_armor_integrity = 100
 	var/added_armor = 0
 	var/damage_reduction = 10
-	var/mechslowdown = 0
+	var/move_slowdown = 0
 	var/armor_operational = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/armor/roundstart
@@ -13,7 +14,7 @@
 	icon_state = "roundstartarmor"
 	iconstate_name = "melee"
 	protect_name = "General Armor"
-	mechslowdown = 0.5
+	move_slowdown = 0.5
 	armor_mod = /datum/armor/mecha_equipment_roundstart_armor
 
 /datum/armor/mecha_equipment_roundstart_armor
@@ -21,49 +22,75 @@
 	bullet = 5
 	laser = 10
 
+/obj/item/mecha_parts/mecha_equipment/armor/Initialize(mapload)
+	. = ..()
+	armor_integrity = max_armor_integrity
+
 /obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
+	chassis.update_move_speed()
+	max_armor_integrity += (added_armor = min(new_mecha.max_integrity/2, 100))
 	armor_integrity += (added_armor = min(new_mecha.max_integrity/2, 100))
-	chassis.set_armor(chassis.get_armor().add_other_armor(armor_mod))
 
 /obj/item/mecha_parts/mecha_equipment/armor/detach(atom/moveto)
+	. = ..()
+	chassis.update_move_speed()
+	max_armor_integrity -= (added_armor = min(chassis.max_integrity/2, 100))
 	armor_integrity -= (added_armor = min(chassis.max_integrity/2, 100))
-	chassis.set_armor(chassis.get_armor().subtract_other_armor(armor_mod))
+
+/*
+/obj/item/mecha_parts/mecha_equipment/armor/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+	. = ..()
+	max_armor_integrity += (added_armor = min(new_mecha.max_integrity/2, 100))
+	armor_integrity += (added_armor = min(new_mecha.max_integrity/2, 100))
+
+/obj/item/mecha_parts/mecha_equipment/armor/detach(atom/moveto)
+	max_armor_integrity -= (added_armor = min(chassis.max_integrity/2, 100))
+	armor_integrity -= (added_armor = min(chassis.max_integrity/2, 100))
 	return ..()
+*/
+#define MECHA_SNOWFLAKE_ID_ARMOR "armor_snowflake"
+
+/obj/item/mecha_parts/mecha_equipment/armor/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_ARMOR,
+		"armor_integrity" = armor_integrity,
+		"max_armor_integrity" = max_armor_integrity,
+	)
 
 // *** Light Armor *** //
 
+/obj/item/mecha_parts/mecha_equipment/armor/flexible_armor_plating
+	name = "Flexible Armor Plating"
+	desc = "A flexible armor composed of ultralight plasma-fibres covering most of the exosuit's chassis, ideal for low-intensity situations where mobility is key."
+	icon_state = "mecha_abooster_proj"
+	iconstate_name = "range"
+	protect_name = "Flexible Plating"
+	armor_mod = /datum/armor/mecha_equipment_flexible_armor
+	max_armor_integrity = 150
+	move_slowdown = 0
+	damage_reduction = 5
+
+/datum/armor/mecha_equipment_flexible_armor
+	melee = 10
+	bullet = 15
+	laser = 10
+
 /obj/item/mecha_parts/mecha_equipment/armor/plasteel_armor_plating
 	name = "Plasteel Armor Plating"
-	desc = "A lightweight set of plasteel plates designed to effectively armor exosuits with a lightweight package."
+	desc = "A set of reinforced plasma-fibre bundles pressed into rigid plates, for good protection while remaining lightweight."
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "range"
 	protect_name = "Plasteel Plating"
 	armor_mod = /datum/armor/mecha_equipment_plasteel_armor
-	armor_integrity = 125
-	mechslowdown = 0.5
+	max_armor_integrity = 125
+	move_slowdown = 0.5
 	damage_reduction = 10
 
 /datum/armor/mecha_equipment_plasteel_armor
 	melee = 25
 	bullet = 20
 	laser = 10
-
-/obj/item/mecha_parts/mecha_equipment/armor/flexible_armor_plating
-	name = "Flexible Armor Plating"
-	desc = "A set of flexible, lightweight plates that surround the exosuit's exterior, offering decent protection for light use."
-	icon_state = "mecha_abooster_proj"
-	iconstate_name = "range"
-	protect_name = "Flexible Plating"
-	armor_mod = /datum/armor/mecha_equipment_flexible_armor
-	armor_integrity = 150
-	mechslowdown = 0
-	damage_reduction = 5
-
-/datum/armor/mecha_equipment_flexible_armor
-	melee = 10
-	bullet = 15
-	laser = 15
 
 // *** Medium Armor *** //
 
@@ -74,8 +101,8 @@
 	iconstate_name = "range"
 	protect_name = "Steel Plating"
 	armor_mod = /datum/armor/mecha_equipment_steel_armor
-	armor_integrity = 200
-	mechslowdown = 1.5
+	max_armor_integrity = 200
+	move_slowdown = 1.5
 	damage_reduction = 10
 
 /datum/armor/mecha_equipment_steel_armor
@@ -90,8 +117,8 @@
 	iconstate_name = "range"
 	protect_name = "Composite Plating"
 	armor_mod = /datum/armor/mecha_equipment_composite_armor
-	armor_integrity = 75
-	mechslowdown = 1
+	max_armor_integrity = 75
+	move_slowdown = 1
 	damage_reduction = 20
 
 /datum/armor/mecha_equipment_composite_armor
@@ -108,8 +135,8 @@
 	iconstate_name = "range"
 	protect_name = "Heavy Plating"
 	armor_mod = /datum/armor/mecha_equipment_heavy_armor
-	armor_integrity = 200
-	mechslowdown = 2
+	max_armor_integrity = 200
+	move_slowdown = 2
 	damage_reduction = 25
 
 /datum/armor/mecha_equipment_heavy_armor
@@ -124,8 +151,8 @@
 	iconstate_name = "range"
 	protect_name = "Ranged Armor"
 	armor_mod = /datum/armor/mecha_equipment_heavy_armor_specialist
-	armor_integrity = 300
-	mechslowdown = 1
+	max_armor_integrity = 300
+	move_slowdown = 1
 	damage_reduction = 30
 
 /datum/armor/mecha_equipment_heavy_armor_specialist

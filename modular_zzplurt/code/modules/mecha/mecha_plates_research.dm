@@ -3,7 +3,7 @@
 /datum/design/general_purpose_armor
 	name = "General Purpose Metal Armor"
 	desc = "Special armoured ablative plate of metal, designed to increase survivability. Standard issue for exosuits."
-	id = "mecha_armor"
+	id = "general_purpose_mecha_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/armor/roundstart
 	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,/datum/material/glass=SHEET_MATERIAL_AMOUNT * 2)
@@ -63,7 +63,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/general_purpose_armor
+/datum/design/steel_mecha_armor
 	name = "Steel Armor Plates"
 	desc = "Precsiely cut mid-strength steel plates for a exosuit. Provides decent protection at a lower cost."
 	id = "steel_mecha_armor"
@@ -84,7 +84,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/general_purpose_armor
+/datum/design/composite_mecha_armor
 	name = "Composite Armor Plates"
 	desc = "A cutting-edge blend of materials, providing excellent protection for some loss of mobility, but somewhat lacking in longevity."
 	id = "composite_mecha_armor"
@@ -105,7 +105,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/general_purpose_armor
+/datum/design/heavy_mecha_armor
 	name = "Heavy Armor Plates"
 	desc = "A mass of cutting-edge material blends and depleted uranium sheets, provides outstanding protection and longevity at the expense of mobility and cost."
 	id = "heavy_mecha_armor"
@@ -139,7 +139,7 @@
 		"ripley_main",
 		"ripley_peri",
 		"mech_hydraulic_clamp",
-		"mech_armor",
+		"general_purpose_mecha_armor",
 	)
 
 /datum/techweb_node/mech_mining

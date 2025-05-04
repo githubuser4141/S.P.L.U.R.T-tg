@@ -150,8 +150,17 @@
 
 
 //servos buff
-/obj/vehicle/sealed/mecha/proc/update_part_values()
+/obj/vehicle/sealed/mecha/update_part_values()
 	. = ..()
+	update_move_speed()
+
+/obj/vehicle/sealed/mecha/proc/update_move_speed()
 	if(servo)
 		var/percentage_buff = (100 - (servo.rating * 4)) / 100
 		movedelay = initial(movedelay) * percentage_buff
+	if(!equip_by_category[MECHA_ARMOR])
+		return
+	for(var/obj/item/mecha_parts/mecha_equipment/armor/mech_armor)
+		if(!mech_armor.armor_operational)
+			continue
+		movedelay += mech_armor.move_slowdown
