@@ -33,7 +33,7 @@
 		MECHA_R_ARM = null,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 2,
+		MECHA_ARMOR = 1,
 	)
 	step_energy_drain = 2
 

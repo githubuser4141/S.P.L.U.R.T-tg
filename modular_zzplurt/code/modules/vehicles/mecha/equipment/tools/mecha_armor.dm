@@ -120,13 +120,168 @@
 	icon_state = "mech_armor_basic"
 	iconstate_name = "melee"
 	protect_name = "Basic Armor"
+
 	max_flat_mecha_hp = 100
 	flat_mecha_hp = 100
 	flat_armor = /datum/armor/flat_mecha_armor/basic
+	armor_mod = /datum/armor/flexible
+
+/datum/armor/basic
+	melee = 15
+	bullet = 10
+	laser = 10
 
 /datum/armor/flat_mecha_armor/basic
-	bomb = 15
+	bomb = 10
 	bullet = 5
-	energy = 2
-	laser = 3
+	laser = 5
 	melee = 5
+
+// *** Light Armor *** //
+
+/obj/item/mecha_parts/mecha_equipment/armor/flexible
+	name = "Flexible Armor Plating"
+	desc = "A flexible armor composed of ultralight plasma-fibres covering most of the exosuit's chassis, ideal for low-intensity situations where mobility is key."
+	icon_state = "mecha_abooster_proj"
+	iconstate_name = "range"
+	protect_name = "Flexible Plating"
+
+	applied_slowdown = 1
+	max_flat_mecha_hp = 150
+	flat_mecha_hp = 150
+	armor_mod = /datum/armor/flexible
+	flat_armor = /datum/armor/flat_mecha_armor/flexible
+
+/datum/armor/flexible
+	melee = 10
+	bullet = 15
+	laser = 10
+
+/datum/armor/flat_mecha_armor/flexible
+	bullet = 5
+	laser = 5
+	melee = 5
+
+/obj/item/mecha_parts/mecha_equipment/armor/plasfibre_shell
+	name = "Plasteel Armor Plating"
+	desc = "A set of reinforced plasma-fibre bundles pressed into rigid plates, for good protection while remaining lightweight."
+	icon_state = "mecha_abooster_proj"
+	iconstate_name = "range"
+	protect_name = "Plasteel Plating"
+	armor_mod = /datum/armor/plasfibre_shell
+
+	applied_slowdown = 1.175
+	max_flat_mecha_hp = 125
+	flat_mecha_hp = 125
+	armor_mod = /datum/armor/plasfibre_shell
+	flat_armor = /datum/armor/flat_mecha_armor/plasfibre_shell
+
+/datum/armor/plasfibre_shell
+	melee = 25
+	bullet = 20
+	laser = 10
+
+/datum/armor/flat_mecha_armor/plasfibre_shell
+	bullet = 5
+	laser = 5
+	melee = 10
+
+// *** Medium Armor *** //
+
+/obj/item/mecha_parts/mecha_equipment/armor/steel
+	name = "Steel Armor Plating"
+	desc = "A inexpensive, though cumbersome, option to armor exosuits, has decent durability and protective value."
+	icon_state = "mecha_abooster_proj"
+	iconstate_name = "range"
+	protect_name = "Steel Plating"
+	armor_mod = /datum/armor/steel
+
+	applied_slowdown = 1.425
+	max_flat_mecha_hp = 300
+	flat_mecha_hp = 300
+	armor_mod = /datum/armor/steel
+	flat_armor = /datum/armor/flat_mecha_armor/steel
+
+/datum/armor/steel
+	melee = 35
+	bullet = 10
+	laser = 15
+
+/datum/armor/flat_mecha_armor/steel
+	bullet = 10
+	laser = 5
+	melee = 15
+
+/obj/item/mecha_parts/mecha_equipment/armor/composite
+	name = "Composite Armor Plating"
+	desc = "A specialist armor package designed to excel at shielding the exosuit from damage, the ceramic layers somewhat lack long term durability."
+	icon_state = "mecha_abooster_proj"
+	iconstate_name = "range"
+	protect_name = "Composite Plating"
+	armor_mod = /datum/armor/composite
+
+	applied_slowdown = 1.225
+	max_flat_mecha_hp = 75
+	flat_mecha_hp = 75
+	armor_mod = /datum/armor/composite
+	flat_armor = /datum/armor/flat_mecha_armor/composite
+
+/datum/armor/composite
+	melee = 45
+	bullet = 45
+	laser = 45
+
+/datum/armor/flat_mecha_armor/composite
+	bullet = 20
+	laser = 20
+	melee = 20
+
+// *** Heavy Armor *** //
+
+/obj/item/mecha_parts/mecha_equipment/armor/heavy
+	name = "Heavy Armor Plating"
+	desc = "A set of very thick, hardened metals and ceramic plating. Very expensive to manufacture and is often impractically heavy, but offers substantial protection."
+	icon_state = "mecha_abooster_proj"
+	iconstate_name = "range"
+	protect_name = "Heavy Plating"
+	armor_mod = /datum/armor/heavy
+
+	applied_slowdown = 1.3
+	max_flat_mecha_hp = 200
+	flat_mecha_hp = 200
+	armor_mod = /datum/armor/heavy
+	flat_armor = /datum/armor/flat_mecha_armor/heavy
+
+/datum/armor/heavy
+	melee = 50
+	bullet = 45
+	laser = 50
+
+/datum/armor/flat_mecha_armor/heavy
+	bullet = 20
+	laser = 25
+	melee = 25
+
+/obj/item/mecha_parts/mecha_equipment/armor/heavy/specialist
+	name = "Heavy Armor Plating"
+	desc = "A set of armor, using cutting-edge metals and composite materials. Rarely found among civilian exosuits."
+	icon_state = "mecha_abooster_proj"
+	iconstate_name = "range"
+	protect_name = "Ranged Armor"
+	armor_mod = /datum/armor/heavy/specialist
+
+	applied_slowdown = 1.175
+	max_flat_mecha_hp = 300
+	flat_mecha_hp = 300
+	armor_mod = /datum/armor/heavy/specialist
+	flat_armor = /datum/armor/flat_mecha_armor/heavy/specialist
+
+/datum/armor/heavy/specialist
+	melee = 50
+	bullet = 50
+	laser = 50
+
+/datum/armor/flat_mecha_armor/heavy/specialist
+	bullet = 25
+	laser = 25
+	melee = 25
