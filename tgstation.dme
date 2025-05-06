@@ -9873,6 +9873,7 @@
 #include "modular_zzplurt\code\modules\antagonists\traitor\uplink\uplink_items\bundle.dm"
 #include "modular_zzplurt\code\modules\antagonists\traitor\uplink\uplink_items\device_tools.dm"
 #include "modular_zzplurt\code\modules\antagonists\traitor\uplink\uplink_items\explosive.dm"
+#include "modular_zzplurt\code\modules\antagonists\traitor\uplink\uplink_items\syndimaid\dangerous.dm"
 #include "modular_zzplurt\code\modules\antagonists\traitor\uplink\uplink_items\syndimaid\syndimaid.dm"
 #include "modular_zzplurt\code\modules\ashwalkers\code\clothing\ash_armour.dm"
 #include "modular_zzplurt\code\modules\ashwalkers\code\items\ash_chicken.dm"
